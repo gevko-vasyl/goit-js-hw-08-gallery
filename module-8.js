@@ -22,7 +22,7 @@ gallery.forEach(element => {
     galleryImg.setAttribute('src', element.preview);
     galleryImg.setAttribute('data-source', element.original);
     galleryImg.setAttribute('alt', element.description);
-    galleryImg.setAttribute('data-index', gallery.indexOf(element));
+    // galleryImg.setAttribute('data-index', gallery.indexOf(element));
 });
 
 const galleryImg= document.querySelector('.gallery__image')
@@ -62,7 +62,7 @@ window.addEventListener('keydown', event => {
     if (event.key === 'Escape') {
         closeLightbox();
     };
-
+////////////////////////////////////////
     let activeIndex = event.target.dataset.index;
     console.log(activeIndex);
     if (event.key === 'ArrowRight') {
