@@ -2,8 +2,8 @@ import gallery from './gallery-items.js';
 
 const galleryList = document.querySelector('.gallery');
 
+
 gallery.forEach(element => {
-    console.log(gallery.indexOf(element))
     const listElement = document.createElement('li');
     galleryList.appendChild(listElement);
 
@@ -22,16 +22,16 @@ gallery.forEach(element => {
     galleryImg.setAttribute('src', element.preview);
     galleryImg.setAttribute('data-source', element.original);
     galleryImg.setAttribute('alt', element.description);
-    // galleryImg.setAttribute('data-index', gallery.indexOf(element));
 });
 
-const galleryImg= document.querySelector('.gallery__image')
+const galleryImg = document.querySelector('.gallery__image');
 const lightbox = document.querySelector('.lightbox');
 const lightboxImage = document.querySelector('.lightbox__image');
+const linksArray = [...gallery.map(element => element.original)];
 
 galleryList.addEventListener('click', galleryClick);
 
-function galleryClick(event) {
+function galleryClick(event, activeIndex) {
     event.preventDefault();
     if (event.target.nodeName !== 'IMG') {
         return
@@ -41,6 +41,7 @@ function galleryClick(event) {
     lightbox.classList.add('is-open');
     lightboxImage.setAttribute('src', largeImgUrl);
 };
+ 
 
 lightbox.addEventListener('click', event => {
     if (event.target.nodeName === 'BUTTON') {
@@ -57,15 +58,22 @@ function closeLightbox() {
     lightboxImage.setAttribute('src', '');
 };
 
+
+function changeImage(dir) {
+    lightboxImage.src = linksArray[linksArray.indexOf(lightboxImage.src)
+        + (dir || 1)] ||
+        linksArray[dir ? linksArray.length - 1 : 0];
+}
+
 window.addEventListener('keydown', event => {
-    console.log(event.code)
+    
     if (event.key === 'Escape') {
         closeLightbox();
     };
-////////////////////////////////////////
-    let activeIndex = event.target.dataset.index;
-    console.log(activeIndex);
-    if (event.key === 'ArrowRight') {
-        
+
+    if (event.key === 'ArrowLeft') {
+        changeImage(-1);
+    } else if (event.key === 'ArrowRight') {
+        changeImage();
     }
 });
