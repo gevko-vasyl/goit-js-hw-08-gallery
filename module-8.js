@@ -24,7 +24,6 @@ gallery.forEach(element => {
     galleryImg.setAttribute('alt', element.description);
 });
 
-const galleryImg = document.querySelector('.gallery__image');
 const lightbox = document.querySelector('.lightbox');
 const lightboxImage = document.querySelector('.lightbox__image');
 const linksArray = [...gallery.map(element => element.original)];
