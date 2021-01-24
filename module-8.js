@@ -31,7 +31,7 @@ const linksArray = [...gallery.map(element => element.original)];
 
 galleryList.addEventListener('click', galleryClick);
 
-function galleryClick(event, activeIndex) {
+function galleryClick(event) {
     event.preventDefault();
     if (event.target.nodeName !== 'IMG') {
         return
@@ -61,9 +61,9 @@ function closeLightbox() {
 
 function changeImage(dir) {
     lightboxImage.src = linksArray[linksArray.indexOf(lightboxImage.src)
-        + (dir || 1)] ||
-        linksArray[dir ? linksArray.length - 1 : 0];
-}
+    + (dir || 1)] ||
+    linksArray[dir ? linksArray.length - 1 : 0];
+};
 
 window.addEventListener('keydown', event => {
     
