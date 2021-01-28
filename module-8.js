@@ -3,26 +3,21 @@ import gallery from './gallery-items.js';
 const galleryList = document.querySelector('.gallery');
 
 
-gallery.forEach(element => {
-    const listElement = document.createElement('li');
-    galleryList.appendChild(listElement);
+const galleryMarkup = gallery.map(({ preview, original, description }) =>
+    `<li class="gallery__item">
+  <a
+    class="gallery__link"
+    href="${original}">
+    <img class="gallery__image"
+      src="${preview}"
+      data-source="${original}"
+      alt="${description}"
+    />
+  </a>
+</li>`).join('');
 
-    const galleryLink = document.createElement('a');
-    listElement.appendChild(galleryLink);
 
-    const galleryImg = document.createElement('img');
-    galleryLink.appendChild(galleryImg);
-
-    listElement.classList.add('gallery__item');
-
-    galleryLink.classList.add('gallery__link');
-    galleryLink.setAttribute('href', element.original);
-
-    galleryImg.classList.add('gallery__image');
-    galleryImg.setAttribute('src', element.preview);
-    galleryImg.setAttribute('data-source', element.original);
-    galleryImg.setAttribute('alt', element.description);
-});
+galleryList.insertAdjacentHTML('beforeend', galleryMarkup);
 
 const lightbox = document.querySelector('.lightbox');
 const lightboxImage = document.querySelector('.lightbox__image');
@@ -45,6 +40,7 @@ function galleryClick(event) {
 lightbox.addEventListener('click', event => {
     if (event.target.nodeName === 'BUTTON') {
         closeLightbox();
+
     };
 
     if (event.target.className === 'lightbox__overlay') {
@@ -55,6 +51,8 @@ lightbox.addEventListener('click', event => {
 function closeLightbox() {
     lightbox.classList.remove('is-open');
     lightboxImage.setAttribute('src', '');
+    lightbox.removeEventListener('click', event);
+
 };
 
 
@@ -68,11 +66,14 @@ window.addEventListener('keydown', event => {
     
     if (event.key === 'Escape') {
         closeLightbox();
+        window.removeEventListener('keydown', event);
     };
 
     if (event.key === 'ArrowLeft') {
         changeImage(-1);
+        window.removeEventListener('keydown', event);
     } else if (event.key === 'ArrowRight') {
         changeImage();
+        window.removeEventListener('keydown', event);
     }
 });
