@@ -52,6 +52,7 @@ function closeLightbox() {
     lightbox.classList.remove('is-open');
     lightboxImage.setAttribute('src', '');
     lightbox.removeEventListener('click', event);
+    window.removeEventListener('keydown', event);
 
 };
 
@@ -66,14 +67,11 @@ window.addEventListener('keydown', event => {
     
     if (event.key === 'Escape') {
         closeLightbox();
-        window.removeEventListener('keydown', event);
     };
 
     if (event.key === 'ArrowLeft') {
         changeImage(-1);
-        window.removeEventListener('keydown', event);
     } else if (event.key === 'ArrowRight') {
         changeImage();
-        window.removeEventListener('keydown', event);
     }
 });
